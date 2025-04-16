@@ -31,6 +31,11 @@ const App = () => {
 
 
 
+
+  const [flippedCardId, setFlippedCardId] = useState(null);
+
+
+
  
 
 
