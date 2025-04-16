@@ -1,9 +1,9 @@
 import React, { useEffect,useState } from 'react';
-import Search from './components/search.jsx';
-import Spinner from './components/Spinner.jsx';
-import MovieCard from './components/MovieCard.jsx';
+import Search from './components/search';
+import Spinner from './components/Spinner';
+import MovieCard from './components/MovieCard';
 import { useDebounce } from 'react-use';
-import { updateSearchCount,getTrendingMovies } from './appwrite.js';
+import { updateSearchCount,getTrendingMovies } from '../appwrite.js';
 
 
 
@@ -26,7 +26,7 @@ const API_OPTIONS = {
   }
 }
 
-const App = () => {
+const Home = () => {
   const [searchTerm,setSearchTerm] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [movieList, setMovieList]= useState([]) ;
@@ -186,4 +186,4 @@ const App = () => {
   )
 }
 
-export default App
+export default Home
