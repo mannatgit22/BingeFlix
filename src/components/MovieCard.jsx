@@ -1,34 +1,29 @@
-import React, { useState } from 'react'; // 🔹 Imported useState to track flip state
+import React from 'react';
 
 const MovieCard = ({
-  movie: { title, vote_average, poster_path, release_date, original_language, overview },
+  movie: { id, title, vote_average, poster_path, release_date, original_language, overview },
+  flippedCardId,
+  setFlippedCardId
 }) => {
-  // 🔹 State to track whether the card is flipped or not
-  const [isFlipped, setIsFlipped] = useState(false);
+  // 🔹 Determine if this card is currently flipped
+  const isFlipped = flippedCardId === id;
 
-  // 🔹 This function toggles the flip state when the card is clicked
+  // 🔹 Toggle flip — if this is already flipped, unflip it; else flip this and unflip others
   const handleCardClick = () => {
-    setIsFlipped(prev => !prev);
+    setFlippedCardId(prev => (prev === id ? null : id));
   };
 
   return (
-    // 🔹 Added cursor-pointer for clickability, and onClick to toggle the flip state
     <div
       className="movie-card group w-full aspect-[2/3] [perspective:1000px] cursor-pointer"
       onClick={handleCardClick}
     >
-      {/* 
-        🔹 `rotate-y-180` is applied only when `isFlipped` is true
-        🔹 This allows manual control of the flip on click
-        🔹 Transition and 3D effect are preserved
-      */}
       <div
         className={`card-inner relative w-full h-full transition-transform duration-700 ease-in-out 
         ${isFlipped ? 'rotate-y-180' : ''} 
         [transform-style:preserve-3d]`}
       >
-
-        {/* ---------- FRONT SIDE OF THE CARD ---------- */}
+        {/* ---------- FRONT ---------- */}
         <div className="card-front absolute w-full h-full top-0 left-0 rounded-2xl overflow-hidden [backface-visibility:hidden]">
           <img
             src={poster_path ? `https://image.tmdb.org/t/p/w500/${poster_path}` : '/no-movie.png'}
@@ -50,8 +45,7 @@ const MovieCard = ({
           </div>
         </div>
 
-        {/* ---------- BACK SIDE OF THE CARD ---------- */}
-        {/* 🔹 This is shown only when card is flipped */}
+        {/* ---------- BACK ---------- */}
         <div className="card-back absolute w-full h-full top-0 left-0 rounded-2xl bg-gray-800 p-4 text-white transform rotate-y-180 [backface-visibility:hidden] overflow-y-auto">
           <h3 className="font-bold mb-2 text-lg">{title}</h3>
           <p className="text-sm">{overview || 'No description available.'}</p>
