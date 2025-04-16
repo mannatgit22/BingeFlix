@@ -169,7 +169,7 @@ const App = () => {
               <ul>
                 {movieList.map((movie) => (
                   <MovieCard key={movie.id} movie={movie} flippedCardId={flippedCardId}
-                  setFlippedCardId={setFlippedCardId/>
+                  setFlippedCardId={setFlippedCardId}/>
                 ))}
               </ul>
             )}  
