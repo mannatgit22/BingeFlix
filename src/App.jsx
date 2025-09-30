@@ -59,15 +59,16 @@ const App = () => {
       
       
       if (!response.ok) {
+        const errorData = await response.json();
         throw new Error('Network response was not ok');
       }
 
       const data = await response.json();
 
-      if(data.response === 'False'){
-        setErrorMessage(data.Error || 'Something went wrong');
+      if(query && data.results && data.results.length === 0){
+        setErrorMessage(`No movies found for "${query}"`);
         setMovieList([]);
-        return
+        return;
       } 
 
       setMovieList(data.results || []);
@@ -77,7 +78,7 @@ const App = () => {
 
     }catch(error){
         console.error(`Error fetching movies: ${error}`);
-        setErrorMessage('Failed to fetch movies. Please try again later.');
+        setErrorMessage(error.message || 'Failed to fetch movies. Please try again later.');
     }finally{
       setIsLoading(false);
     }
